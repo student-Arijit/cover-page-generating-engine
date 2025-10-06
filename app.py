@@ -20,13 +20,16 @@ paper_code=st.text_input("Enter Your Paper Code: ")
 background_pdf_path = "assets/background1.pdf"  #PDF background
 
 if st.button("Generate PDF"):
+    p = st.progress(0)
     # Step 1: Create a new PDF with ReportLab (text overlay)
     packet = BytesIO()
+    p.progress(1)
     c = canvas.Canvas(packet, pagesize=A4)
     width, height = A4
-
+    p.progress(3)
     # Add text at custom positions
     c.setFont("Helvetica-Bold", 16)
+    p.progress(4)
     darkblue = colors.Color(17/255, 17/255, 132/255)
     c.setFillColor(darkblue)
     c.drawString(400, height - 230, f"{univ}")
@@ -36,7 +39,7 @@ if st.button("Generate PDF"):
     c.drawString(30, 147, f"PAPER CODE: {paper_code}")
     c.drawImage("assets/University_of_Calcutta_logo.png", 450, height - 125, width=100, height=90, mask="auto")
     c.save()
-
+    p.progress(50)
     packet.seek(0)
 
     # Step 2: Read both background and overlay PDFs
@@ -44,7 +47,7 @@ if st.button("Generate PDF"):
     overlay = PdfReader(packet)
 
     output = PdfWriter()
-
+    p.progress(70)
     # Merge overlay (text) onto background
     background_page = background.pages[0]
     background_page.merge_page(overlay.pages[0])
@@ -54,23 +57,11 @@ if st.button("Generate PDF"):
     final_buffer = BytesIO()
     output.write(final_buffer)
     final_buffer.seek(0)
+    p.progress(100)
 
-    # Step 4: Encode to Base64 for opening in browser
-    b64_pdf = base64.b64encode(final_buffer.read()).decode("utf-8")
-    pdf_url = f"data:application/pdf;base64,{b64_pdf}"
-
-    # Open in new tab
-    script = f"""
-        <script>
-            const blob = atob("{b64_pdf}");
-            const array = new Uint8Array(blob.length);
-            for (let i = 0; i < blob.length; i++) {{
-                array[i] = blob.charCodeAt(i);
-            }}
-            const pdfBlob = new Blob([array], {{ type: "application/pdf" }});
-            const pdfURL = URL.createObjectURL(pdfBlob);
-            window.open(pdfURL);
-        </script>
-    """
-
-    st.components.v1.html(script, height=0)
+    st.download_button(
+        label="📄 Download PDF",
+        data=final_buffer,
+        file_name="result.pdf",
+        mime="application/pdf"
+    )
