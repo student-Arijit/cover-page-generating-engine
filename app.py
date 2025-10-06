@@ -107,29 +107,9 @@ if st.button("Generate PDF"):
     final_buffer.seek(0)
     p.progress(100)
 
-     # Step 4: Encode to Base64 for opening in browser
-    b64_pdf = base64.b64encode(final_buffer.read()).decode("utf-8")
-    pdf_url = f"data:application/pdf;base64,{b64_pdf}"
-
-    # Open in new tab
-    script = f"""
-        <script>
-            const blob = atob("{b64_pdf}");
-            const array = new Uint8Array(blob.length);
-            for (let i = 0; i < blob.length; i++) {{
-                array[i] = blob.charCodeAt(i);
-            }}
-            const pdfBlob = new Blob([array], {{ type: "application/pdf" }});
-            const pdfURL = URL.createObjectURL(pdfBlob);
-            window.open(pdfURL);
-        </script>
-    """
-
-    st.components.v1.html(script, height=0)
-
-    """st.download_button(
+    st.download_button(
         label="📄 Download PDF",
         data=final_buffer,
         file_name="result.pdf",
         mime="application/pdf"
-    )"""
+    )
