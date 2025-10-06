@@ -12,6 +12,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 # Register Raleway Bold
 pdfmetrics.registerFont(TTFont('raleway', 'assets/Fonts/raleway.ttf'))
 pdfmetrics.registerFont(TTFont('BAHNSCHRIFT', 'assets/Fonts/BAHNSCHRIFT.ttf'))
+pdfmetrics.registerFont(TTFont('nunitosans', 'assets/Fonts/nunitosans.ttf'))
+pdfmetrics.registerFont(TTFont('trebuc', 'assets/Fonts/trebuc.ttf'))
 
 st.title("Cover page generating Engine")
 univ=st.selectbox("Enter your University/college: ", ("University of Calcutta"))
@@ -34,17 +36,16 @@ if st.button("Generate PDF"):
     width, height = A4
     p.progress(3)
     # Add text at custom positions
-    c.setFont("Helvetica-Bold", 16)
     p.progress(4)
-    darkblue = colors.Color(17/255, 17/255, 132/255)
+    darkblue = colors.Color(18/255, 14/255, 94/255)
     c.setFillColor(darkblue)
 
     #Stream
-    c.setFont("Helvetica-Bold", 20) 
+    c.setFont("nunitosans", 25) 
     c.drawString(50, height - 185, stream)
 
     #Semester
-    c.drawString(60, height - 220, f"Semester - {sem}")
+    c.drawString(60, height - 230, f"Semester - {sem}")
 
     #roll, reg, paper name, UNIV NAME section
     if univ == "University of Calcutta":
@@ -61,19 +62,27 @@ if st.button("Generate PDF"):
         c.drawString(170, height - 320, roll)
 
         #reg
-        c.setFillColor(colors.blue)
+        c.setFillColor(darkblue)
         c.drawString(30, height - 370, "C.U. REG. NO: - ")
         c.setFillColor(colors.black)
         c.drawString(170, height - 370, reg)
 
-        #paper name
-        c.setFillColor(colors.blue)
-        c.drawString(30, height - 420, "PAPER NAME: - ")
-        c.setFillColor(colors.black)
-        c.drawString(170, height - 420, paper_name)
-        c.setFillColor(colors.blue)
+    #paper name
+    c.setFillColor(darkblue)
+    c.drawString(30, height - 420, "PAPER NAME: - ")
+    c.setFillColor(colors.black)
+    if len(paper_name) > 15:
+        words = paper_name.split()
+        c.drawString(170, height - 420, words[0])
+        words.pop(0)
+        words = " ".join(words)
+        c.drawString(30, height - 440, words)
 
-    c.setFont("Helvetica-Bold", 16)
+    else:
+        c.drawString(170, height - 420, paper_name)
+    c.setFillColor(darkblue)
+
+    c.setFont("trebuc", 20)
     c.drawString(50, 190, f"SUBJECT: {sub}")
     c.drawString(30, 147, f"PAPER CODE: {paper_code}")
     c.drawImage("assets/University_of_Calcutta_logo.png", 380, height - 170, width=150, height=140, mask="auto")
@@ -97,10 +106,30 @@ if st.button("Generate PDF"):
     output.write(final_buffer)
     final_buffer.seek(0)
     p.progress(100)
-    
-    st.download_button(
+
+     # Step 4: Encode to Base64 for opening in browser
+    b64_pdf = base64.b64encode(final_buffer.read()).decode("utf-8")
+    pdf_url = f"data:application/pdf;base64,{b64_pdf}"
+
+    # Open in new tab
+    script = f"""
+        <script>
+            const blob = atob("{b64_pdf}");
+            const array = new Uint8Array(blob.length);
+            for (let i = 0; i < blob.length; i++) {{
+                array[i] = blob.charCodeAt(i);
+            }}
+            const pdfBlob = new Blob([array], {{ type: "application/pdf" }});
+            const pdfURL = URL.createObjectURL(pdfBlob);
+            window.open(pdfURL);
+        </script>
+    """
+
+    st.components.v1.html(script, height=0)
+
+    """st.download_button(
         label="📄 Download PDF",
         data=final_buffer,
         file_name="result.pdf",
         mime="application/pdf"
-    )
+    )"""
