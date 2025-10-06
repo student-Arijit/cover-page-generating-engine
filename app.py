@@ -1,7 +1,7 @@
 import streamlit as st
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.colors import HexColor
+from reportlab.lib import colors
 from io import BytesIO
 import base64
 import os
@@ -17,7 +17,7 @@ paper_name=st.text_input("Enter Your Paper name: ")
 sub=st.text_input("Enter Your Subject: ")
 paper_code=st.text_input("Enter Your Paper Code: ")
 
-background_pdf_path = "background1.pdf"  #PDF background
+background_pdf_path = "assets/background1.pdf"  #PDF background
 
 if st.button("Generate PDF"):
     # Step 1: Create a new PDF with ReportLab (text overlay)
@@ -27,8 +27,14 @@ if st.button("Generate PDF"):
 
     # Add text at custom positions
     c.setFont("Helvetica-Bold", 16)
+    darkblue = colors.Color(17/255, 17/255, 132/255)
+    c.setFillColor(darkblue)
+    c.drawString(400, height - 230, f"{univ}")
     c.drawString(100, height - 100, f"Name: {sem}")
     c.drawString(100, height - 140, f"Score: {stream}")
+    c.drawString(50, 190, f"SUBJECT: {sub}")
+    c.drawString(30, 147, f"PAPER CODE: {paper_code}")
+    c.drawImage("assets/University_of_Calcutta_logo.png", 450, height - 125, width=100, height=90, mask="auto")
     c.save()
 
     packet.seek(0)
