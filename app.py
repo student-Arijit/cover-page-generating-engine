@@ -17,7 +17,7 @@ paper_name=st.text_input("Enter Your Paper name: ")
 sub=st.text_input("Enter Your Subject: ")
 paper_code=st.text_input("Enter Your Paper Code: ")
 
-background_pdf_path = "testdoc.pdf"  # Your PDF background
+background_pdf_path = "background1.pdf"  #PDF background
 
 if st.button("Generate PDF"):
     # Step 1: Create a new PDF with ReportLab (text overlay)
