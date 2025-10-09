@@ -15,10 +15,11 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     if st.button("Generate PDF"):
-        template2.cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub)
+        template1.cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub)
 
 with col2:
-    st.write("working")
+    if st.button("Generate PDF"):
+        template2.cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub)
 
 with col3:
     st.write("working")

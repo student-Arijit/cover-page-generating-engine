@@ -94,28 +94,9 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     final_buffer.seek(0)
     p.progress(100)
 
-    """st.download_button(
-        label="📄 Download PDF",
-        data=final_buffer,
-        file_name="result.pdf",
-        mime="application/pdf"
-    )"""
-
-    b64_pdf = base64.b64encode(final_buffer.read()).decode("utf-8")
-    pdf_url = f"data:application/pdf;base64,{b64_pdf}"
-
-    # Open in new tab
-    script = f"""
-        <script>
-            const blob = atob("{b64_pdf}");
-            const array = new Uint8Array(blob.length);
-            for (let i = 0; i < blob.length; i++) {{
-                array[i] = blob.charCodeAt(i);
-            }}
-            const pdfBlob = new Blob([array], {{ type: "application/pdf" }});
-            const pdfURL = URL.createObjectURL(pdfBlob);
-            window.open(pdfURL);
-        </script>
-    """
-
-    st.components.v1.html(script, height=0)
+    st.download_button(
+        label = "📄 Download PDF",
+        data = final_buffer,
+        file_name = f"{roll}.pdf",
+        mime = "application/pdf"
+    )
