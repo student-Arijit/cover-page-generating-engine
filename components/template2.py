@@ -15,7 +15,6 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     c = canvas.Canvas(packet, pagesize=A4)
     width, height = A4  
 
-
     background = PdfReader(background_pdf_path)
     overlay = PdfReader(packet)
 
