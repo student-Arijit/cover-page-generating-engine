@@ -16,9 +16,10 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     width, height = A4  
 
     #==============
-    
+    c.drawString(100, 100, "hello")
     #==============
-
+    c.save()
+    packet.seek(0)
     background = PdfReader(background_pdf_path)
     overlay = PdfReader(packet)
 
