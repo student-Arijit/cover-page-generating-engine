@@ -14,11 +14,12 @@ paper_code=st.text_input("Enter Your Paper Code: ")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    if st.button("Generate PDF"):
+    st.image("assets/images/template1.png")
+    if st.button("Generate PDF", key = "template1"):
         template1.cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub)
 
 with col2:
-    if st.button("Generate PDF"):
+    if st.button("Generate PDF", key = "template2"):
         template2.cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub)
 
 with col3:
