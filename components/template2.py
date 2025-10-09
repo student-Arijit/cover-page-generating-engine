@@ -18,7 +18,7 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
 
     #==============
     
-
+    c.drawString(100, 100, "hello")
 
     #==============
 

@@ -1,6 +1,11 @@
 import streamlit as st
 from components import *
 
+st.set_page_config(
+    "cover-page-generating-engine",
+    page_icon = "📘"
+)
+
 st.title("Cover page generating Engine")
 univ=st.selectbox("Enter your University/college: ", ("University of Calcutta"))
 stream=st.selectbox("Enter Your Stream: ", ("B.Sc Honours", "B.com", "B.A"), index=0)
