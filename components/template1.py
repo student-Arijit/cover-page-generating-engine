@@ -9,7 +9,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
-    background_pdf_path = "assets/background1.pdf"  #PDF background
+    background_pdf_path = "assets/backgrounds/background1.pdf"  #PDF background
     pdfmetrics.registerFont(TTFont('raleway', 'assets/Fonts/raleway.ttf'))
     pdfmetrics.registerFont(TTFont('BAHNSCHRIFT', 'assets/Fonts/BAHNSCHRIFT.ttf'))
     pdfmetrics.registerFont(TTFont('nunitosans', 'assets/Fonts/nunitosans.ttf'))

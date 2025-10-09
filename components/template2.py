@@ -9,13 +9,13 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
-    background_pdf_path = "assets/background2.pdf"
+    background_pdf_path = "assets/backgrounds/background2.pdf"
 
     packet = BytesIO()
     c = canvas.Canvas(packet, pagesize=A4)
     width, height = A4  
 
-    
+
     #==============
     
 
