@@ -78,6 +78,28 @@ if option == "Cover Page":
     else:
         st.info("📝 Please submit the form above to unlock the design section.")
 elif option == "Index":
-    st.subheader("working")
+    st.subheader("INDEX Generator:")
+
+    with st.form("Index form", clear_on_submit=True):
+        coli, colii = st.columns(2)
+
+        with coli:
+            data = st.text_input("Enter Assignment Name:")
+        
+        with colii:
+            page = st.text_input("Enter Page Number:")
+
+        coliii, coliv = st.columns(2)
+
+        with coliii:
+            code_date = st.date_input("Enter Code Date:")
+        
+        with coliv:
+            approve_date = st.date_input("Enter Approval Date:")
+        
+        st.form_submit_button("Submit")
+
+    if st.button("gen"):
+        index.Index()
 else:
     st.error("404! page not found")
