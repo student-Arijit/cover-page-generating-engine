@@ -8,8 +8,6 @@ st.set_page_config(
 st.title("Cover Page Generating Engine:")
 st.subheader("Information Form:")
 
-st.error("developers are working, no functionality happens sorry😔")
-
 with st.form("About Form", clear_on_submit = False):
     st.subheader("Student About:")
 
