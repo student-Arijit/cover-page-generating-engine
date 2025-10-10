@@ -70,6 +70,7 @@ if option == "Cover Page":
                 )
 
         with col2:
+            st.image("assets/images/template2.png", caption="Template 2")
             if st.button("Generate PDF", key="template2"):
                 template2.cover_page(
                     data["stream"], data["sem"], data["univ"], data["roll"],

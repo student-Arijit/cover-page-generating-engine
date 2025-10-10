@@ -72,7 +72,7 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     c.setFont("trebuc", 20)
     c.drawString(50, 190, f"SUBJECT: {sub}")
     c.drawString(30, 147, f"PAPER CODE: {paper_code}")
-    c.drawImage("assets/University_of_Calcutta_logo.png", 380, height - 170, width=150, height=140, mask="auto")
+    c.drawImage("assets/images/University_of_Calcutta_logo.png", 380, height - 170, width=150, height=140, mask="auto")
     c.save()
     p.progress(50)
     packet.seek(0)

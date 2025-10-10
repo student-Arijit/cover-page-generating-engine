@@ -10,35 +10,58 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     background_pdf_path = "assets/backgrounds/background2.pdf"
+    pdfmetrics.registerFont(TTFont('BAHNSCHRIFT', 'assets/Fonts/BAHNSCHRIFT.ttf'))
+    pdfmetrics.registerFont(TTFont('calibri', 'assets/Fonts/calibri.ttf'))
+    pdfmetrics.registerFont(TTFont('nunitosans', 'assets/Fonts/nunitosans.ttf'))
+    pdfmetrics.registerFont(TTFont('raleway', 'assets/Fonts/raleway.ttf'))
+    darkblue = colors.Color(9/255, 31/255, 110/255)
+    deepblue = colors.Color(17/255, 33/255, 89/255)
 
     packet = BytesIO()
     c = canvas.Canvas(packet, pagesize=A4)
     width, height = A4  
 
-
-    #==============
-    c.drawImage("assets/images/University_of_Calcutta_logo.png",140,698,width=140,height=130,mask="auto")
+    c.drawImage("assets/images/University_of_Calcutta_logo.png", 160, 690, width=140, height=130, mask="auto")
     
-    c.drawString(177,670,f"UNIVERSITY")
-    c.drawString(205,655,f"OF")
-    c.drawString(177,639,f"CALCUTTA")
+    c.setFont("raleway", 32)
+    c.setFillColor(deepblue)
+    c.drawString(147, 650, "UNIVERSITY")
+    c.drawString(210, 615, "OF")
+    c.drawString(152, 580, "CALCUTTA")
 
-    c.setFillColor(colors.darkblue)
-    c.drawString(385,600,f"SUBJECT :- ")
-    c.drawString(385,570,f"PAPER CODE :- ")
+    c.setFillColor(darkblue)
+    c.setFont("calibri", 22)
+    c.drawString(345, 540, "SUBJECT :- ")
+    c.drawString(445, 540, sub)
+    c.drawString(345, 510, "PAPER CODE :- ")
+    c.drawString(480, 510, paper_code)
 
+    #roll, reg & paper name
     c.setFillColor(colors.red)
-    c.drawString(300,440,f"C.U. ROLL NO :- ")
-    c.drawString(300,376,f"C.U. REG NO: - ")
-    c.drawString(300,310,f"PAPER NAME :- ")
+    c.setFont("BAHNSCHRIFT", 18)
+    c.drawString(300, 430, "C.U. ROLL NO :- ")
+    c.setFillColor(colors.black)
+    c.drawString(430, 430, roll)
+    c.setFillColor(colors.red)
+    c.drawString(300, 376, "C.U. REG NO: - ")
+    c.setFillColor(colors.black)
+    c.drawString(420, 376, reg)
+    c.setFillColor(colors.red)
+    c.drawString(300, 320, "PAPER NAME :- ")
+    c.setFillColor(colors.black)
+    if len(paper_name) > 15:
+        words = paper_name.split()
+        c.drawString(430, 320, words[0])
+        words.pop(0)
+        new = " ".join(words)
+        c.drawString(300, 300, new)
+    else:
+        c.drawString(430, 320, paper_name)
 
     c.setFillColor(colors.yellow)
-    c.drawString(75,238,f"B.Sc. Honours")
-    c.drawString(75,190,f"SEMESTER 4")
-
-
-    #==============
-
+    c.setFont("BAHNSCHRIFT", 20)
+    c.drawString(45,241, stream)
+    c.drawString(75,187, f"SEMESTER   {sem}")
 
     c.save()
     packet.seek(0)
