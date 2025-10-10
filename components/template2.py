@@ -17,7 +17,12 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
 
 
     #==============
-    c.drawString(100, 100, "Hello")
+    c.drawImage("assets/images/University_of_Calcutta_logo.png",70,550,width=140,height=130,mask="auto")
+    c.setFillColor(colors.red)
+    c.drawString(100,400,f"C.U.Roll No.:-")
+    c.setFillColor(colors.black)
+    c.drawString(180,100,f"{roll}")
+    
     #==============
 
 
