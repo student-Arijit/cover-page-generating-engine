@@ -5,6 +5,10 @@ st.set_page_config(
     "cover-page-generating-engine",
     page_icon = "📘"
 )
+
+#Sidebar Functionalities
+sidebar.Sidebar()
+
 st.title("Cover Page Generating Engine:")
 st.subheader("Information Form:")
 
