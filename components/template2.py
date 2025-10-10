@@ -18,6 +18,7 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
 
     #==============
     c.drawImage("assets/images/University_of_Calcutta_logo.png",140,698,width=140,height=130,mask="auto")
+    
     c.drawString(177,670,f"UNIVERSITY")
     c.drawString(205,655,f"OF")
     c.drawString(177,639,f"CALCUTTA")
