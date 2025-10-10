@@ -113,7 +113,7 @@ elif option == "Index":
             st.session_state["count"] += 1
             st.badge("Success", color="green")
 
-    if st.button("gen"):
+    if st.button("Get PDF"):
         index.Index(st.session_state["stack"])
         
 else:

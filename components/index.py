@@ -1,55 +1,60 @@
 import streamlit as st
 from io import BytesIO
-from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Table ,TableStyle
 from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
 import base64
 
 def Index(arr):
     packet = BytesIO()
+    doc = SimpleDocTemplate(packet, pagesize=A4, rightMargin=30, leftMargin=30, topMargin=10, bottomMargin=30)  
+    styles = getSampleStyleSheet()
+    elements = []
 
-    c = canvas.Canvas(packet, pagesize = A4)
-    width, height = A4
+    # Heading
+    elements.append(Paragraph("INDEX", styles['Title']))
+    elements.append(Spacer(1, 10))
 
-    c.setFontSize(30)
-    c.drawString(250, height - 50, "INDEX")
-    doc = SimpleDocTemplate(packet, pagesize=A4)
-    data = [
-        ["SI No.", "Assignment Name", "Code Date", "Approval Date", "Pg. No.", "Signature"]
-    ]
-
+    # Table data
+    data = [["SI No.", "Assignment Name", "Code Date", "Approval Date", "Pg. No.", "Signature"]]
     data.extend(arr)
+    centered_style = ParagraphStyle(name="centered", parent=styles['Normal'], alignment=TA_CENTER)
+    right_align = ParagraphStyle(
+        name= "RightAlign",
+        parent= styles["Normal"],
+        alignment= 2,
+        fontSize= 12
+    )
 
-    table = Table(data, colWidths=[50, 150, 100, 100, 70, 70])
+    # Wrap each cell in Paragraph for automatic text wrapping
+    wrapped_data = []
+    for row in data:
+        wrapped_row = [Paragraph(str(cell), centered_style) for cell in row]
+        wrapped_data.append(wrapped_row)
+
+    table = Table(wrapped_data, colWidths=[50, 150, 100, 100, 70, 70], repeatRows=1)
     style = TableStyle([
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
         ('FONTSIZE', (0, 0), (-1, 0), 14),
         ('GRID', (0, 0), (-1, -1), 1, colors.black)
     ])
     table.setStyle(style)
 
-    doc.build([table])
+    elements.append(table)
+    elements.append(Spacer(1, 10))
 
-    c.save()
+    elements.append(Paragraph("-------------------------------------------", right_align))
+    elements.append(Spacer(1, 5))
+    elements.append(Paragraph("[Signature of H.O.D]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", right_align))
+
+
+    doc.build(elements)
+
     packet.seek(0)
-    
-    b64_pdf = base64.b64encode(packet.read()).decode("utf-8")
-    pdf_url = f"data:application/pdf;base64,{b64_pdf}"
 
-    # Open in new tab
-    script = f"""
-        <script>
-            const blob = atob("{b64_pdf}");
-            const array = new Uint8Array(blob.length);
-            for (let i = 0; i < blob.length; i++) {{
-                array[i] = blob.charCodeAt(i);
-            }}
-            const pdfBlob = new Blob([array], {{ type: "application/pdf" }});
-            const pdfURL = URL.createObjectURL(pdfBlob);
-            window.open(pdfURL);
-        </script>
-    """
-
-    st.components.v1.html(script, height=0)
+    st.download_button(label="download pdf", data=packet, file_name="index.pdf", mime="application/pdf")
