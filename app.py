@@ -35,20 +35,42 @@ with st.form("About Form", clear_on_submit = False):
         submit = st.form_submit_button("Submit")
 
     if submit:
-        st.success("Your Form submitted. Please, choose your design and download.")    
+        if not all([roll, reg, paper_name, sub, paper_code]):
+            st.error("⚠️ Please fill all fields before submitting.")
+        else:
+            # Save all inputs to session state
+            st.session_state["form_data"] = {
+                "univ": univ,
+                "stream": stream,
+                "sem": sem,
+                "roll": roll,
+                "reg": reg,
+                "paper_name": paper_name,
+                "sub": sub,
+                "paper_code": paper_code,
+            }
+            st.success("Your Form is submitted. Please choose your design below.")
+    
+st.subheader("🎨 Choose your designs here:")
 
-st.subheader("Choose your designs here:")
+if "form_data" in st.session_state:
+    data = st.session_state["form_data"]
 
-col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
 
-with col1:
-    st.image("assets/images/template1.png")
-    if st.button("Generate PDF", key = "template1"):
-        template1.cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub)
+    with col1:
+        st.image("assets/images/template1.png", caption="Template 1")
+        if st.button("Generate PDF", key="template1"):
+            template1.cover_page(
+                data["stream"], data["sem"], data["univ"], data["roll"],
+                data["reg"], data["paper_name"], data["paper_code"], data["sub"]
+            )
 
-with col2:
-    if st.button("Generate PDF", key = "template2"):
-        template2.cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub)
-
-with col3:
-    st.write("working")
+    with col2:
+        if st.button("Generate PDF", key="template2"):
+            template2.cover_page(
+                data["stream"], data["sem"], data["univ"], data["roll"],
+                data["reg"], data["paper_name"], data["paper_code"], data["sub"]
+            )
+else:
+    st.info("📝 Please submit the form above to unlock the design section.")
