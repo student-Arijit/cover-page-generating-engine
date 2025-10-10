@@ -16,7 +16,7 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     width, height = A4  
 
     #==============
-    
+    c.drawString(100, 100, "Hello")
     #==============
 
     background = PdfReader(background_pdf_path)
