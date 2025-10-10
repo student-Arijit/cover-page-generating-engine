@@ -2,11 +2,11 @@ import streamlit as st
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import Table ,TableStyle
+from reportlab.platypus import SimpleDocTemplate, Table ,TableStyle
 from reportlab.lib import colors
 import base64
 
-def Index():
+def Index(arr):
     packet = BytesIO()
 
     c = canvas.Canvas(packet, pagesize = A4)
@@ -14,9 +14,12 @@ def Index():
 
     c.setFontSize(30)
     c.drawString(250, height - 50, "INDEX")
+    doc = SimpleDocTemplate(packet, pagesize=A4)
     data = [
         ["SI No.", "Assignment Name", "Code Date", "Approval Date", "Pg. No.", "Signature"]
     ]
+
+    data.extend(arr)
 
     table = Table(data, colWidths=[50, 150, 100, 100, 70, 70])
     style = TableStyle([
@@ -27,8 +30,7 @@ def Index():
     ])
     table.setStyle(style)
 
-    table.wrapOn(c, width, height)
-    table.drawOn(c, 30, height - 100)
+    doc.build([table])
 
     c.save()
     packet.seek(0)

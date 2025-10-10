@@ -35,7 +35,7 @@ if option == "Cover Page":
         col1, col2, col3 = st.columns([1, 0.5, 1])
 
         with col2:
-            submit = st.form_submit_button("Submit")
+            submit = st.form_submit_button("Submit", key="cover_page_submit")
 
         if submit:
             if not all([roll, reg, paper_name, sub, paper_code]):
@@ -77,14 +77,21 @@ if option == "Cover Page":
                 )
     else:
         st.info("📝 Please submit the form above to unlock the design section.")
-elif option == "Index":
-    st.subheader("INDEX Generator:")
 
+elif option == "Index":
+    st.header("INDEX Generator:")
+
+    if "stack" not in st.session_state:
+        st.session_state["stack"] = []
+    if "count" not in st.session_state:
+        st.session_state["count"] = 1
+        
     with st.form("Index form", clear_on_submit=True):
+        st.subheader("Enter the Details:")
         coli, colii = st.columns(2)
 
         with coli:
-            data = st.text_input("Enter Assignment Name:")
+            assignment_name = st.text_input("Enter Assignment Name:")
         
         with colii:
             page = st.text_input("Enter Page Number:")
@@ -92,14 +99,22 @@ elif option == "Index":
         coliii, coliv = st.columns(2)
 
         with coliii:
-            code_date = st.date_input("Enter Code Date:")
-        
+            code_date = st.text_input("Enter Code Date:")
+
         with coliv:
-            approve_date = st.date_input("Enter Approval Date:")
-        
-        st.form_submit_button("Submit")
+            approve_date = st.text_input("Enter Approval Date:")
+            
+        submit_data = st.form_submit_button("Submit", key="index_submit")
+
+        if submit_data:
+            count = st.session_state["count"]
+            subdata = [str(count), assignment_name, code_date, approve_date, page, " "]
+            st.session_state["stack"].append(subdata)
+            st.session_state["count"] += 1
+            st.badge("Success", color="green")
 
     if st.button("gen"):
-        index.Index()
+        index.Index(st.session_state["stack"])
+        
 else:
     st.error("404! page not found")
