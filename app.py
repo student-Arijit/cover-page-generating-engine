@@ -69,10 +69,30 @@ if option == "Cover Page":
                     data["reg"], data["paper_name"], data["paper_code"], data["sub"]
                 )
 
+            if st.button("Generate PDF", key="template4"):
+                template4.cover_page(
+                    data["stream"], data["sem"], data["univ"], data["roll"],
+                    data["reg"], data["paper_name"], data["paper_code"], data["sub"]
+                )
+
+
         with col2:
             st.image("assets/images/template2.png", caption="Template 2")
             if st.button("Generate PDF", key="template2"):
-                template2.cover_page(
+                template5.cover_page(
+                    data["stream"], data["sem"], data["univ"], data["roll"],
+                    data["reg"], data["paper_name"], data["paper_code"], data["sub"]
+                )
+
+            if st.button("Generate PDF", key="template5"):
+                template5.cover_page(
+                    data["stream"], data["sem"], data["univ"], data["roll"],
+                    data["reg"], data["paper_name"], data["paper_code"], data["sub"]
+                )
+
+        with col3:
+            if st.button("Generate PDF", key="template3"):
+                template3.cover_page(
                     data["stream"], data["sem"], data["univ"], data["roll"],
                     data["reg"], data["paper_name"], data["paper_code"], data["sub"]
                 )

@@ -46,7 +46,7 @@ def Index(arr):
     table.setStyle(style)
 
     elements.append(table)
-    elements.append(Spacer(1, 10))
+    elements.append(Spacer(1, 35))
 
     elements.append(Paragraph("-------------------------------------------", right_align))
     elements.append(Spacer(1, 5))

@@ -1,1 +1,1 @@
-__all__ = ["template1", "template2", "sidebar", "index"]
+__all__ = ["template1", "template2", "sidebar", "index", "template3", "template4", "template5"]
