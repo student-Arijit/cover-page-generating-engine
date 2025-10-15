@@ -26,7 +26,7 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     width, height = A4  
 
     # University logo
-    c.drawImage("assets/images/University_of_Calcutta_logo.png", 222, 636, width=149, height=140, mask="auto")
+    c.drawImage("assets/images/University_of_Calcutta_logo.png", 220, 633, width=155, height=154, mask="auto")
 
     # Header text
     c.setFont("raleway", 32)
@@ -36,39 +36,36 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
     c.drawString(353, 597, "CALCUTTA")
 
     # Subject and Paper Code
-    c.setFillColor(colors.white)
+    c.setFillColor(colors.darkblue)
     c.setFont("calibri", 22)
     c.drawString(100, 390, "SUBJECT :- ")
-    c.setFillColor(colors.aqua)
+    c.setFillColor(colors.gold)
     c.drawString(205, 390, sub)
 
-    c.setFillColor(colors.white)
+    c.setFillColor(colors.darkblue)
     c.drawString(100, 440, "PAPER CODE :- ")
-    c.setFillColor(colors.aqua)
+    c.setFillColor(colors.gold)
     c.drawString(240, 440, paper_code)
 
     # Roll, Reg
-    c.setFillColor(colors.white)
+    c.setFillColor(colors.darkblue)
     c.setFont("BAHNSCHRIFT", 18)
     c.drawString(100, 300, "C.U. ROLL NO :- ")
-    c.setFillColor(colors.aqua)
+    c.setFillColor(colors.gold)
     c.drawString(229, 300, roll)
 
-    c.setFillColor(colors.white)
+    c.setFillColor(colors.darkblue)
     c.drawString(100, 260, "C.U. REG NO: - ")
-    c.setFillColor(colors.aqua)
+    c.setFillColor(colors.gold)
     c.drawString(220, 260, reg)
 
     # PAPER NAME section (improved alignment + wrapping)
-    c.setFillColor(colors.white)
+    c.setFillColor(colors.darkblue)
     c.drawString(65, 63, "PAPER NAME :- ")
-    
     text_x = 194  # aligned neatly under label
     text_y = 63
-    c.setFillColor(colors.white)
-    c.drawString(100,520,"====================")
+    c.setFillColor(colors.gold)
 
-    c.setFillColor(colors.aqua)
     if len(paper_name) > 25:
         # Wrap long paper names
         c.setFont("BAHNSCHRIFT", 16)
@@ -90,11 +87,11 @@ def cover_page(stream, sem, univ, roll, reg, paper_name, paper_code, sub):
         c.drawString(text_x, text_y, paper_name)
 
     # Stream & Semester
-    c.setFillColor(colors.aqua)
+    c.setFillColor(colors.darkblue)
     c.setFont("BAHNSCHRIFT", 23)
     c.drawString(100, 577, stream)
-    c.setFillColor(colors.aqua)
-    c.drawString(100, 540, f"SEMESTER :- {sem}")
+    c.setFillColor(colors.gold)
+    c.drawString(218, 525, f"SEMESTER :- {sem}")
 
     # Finalize overlay
     c.save()
