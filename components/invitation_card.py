@@ -20,7 +20,7 @@ def Invitation_card(name):
     c.setFont("Helvetica-Bold", 55)
     c.setFillColor(colors.white)
 
-    x = 180  
+    x = 470  
     y = 320  
 
     c.drawString(x, y, name)
