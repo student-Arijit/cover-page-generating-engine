@@ -17,7 +17,7 @@ def Invitation_card(name):
 
     c.setFont("Helvetica-Bold", 50)
     c.setFillColor(colors.white)
-    c.drawString(180, 320, f"{name}")
+    c.drawString(140, 320, f"{name}")
 
     c.save()
     packet.seek(0)
