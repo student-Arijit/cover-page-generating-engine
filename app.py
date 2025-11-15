@@ -1,5 +1,7 @@
 import streamlit as st
 from components import *
+from components.invitation_card import Invitation_card
+
 
 st.set_page_config(
     "cover-page-generating-engine",
@@ -41,7 +43,6 @@ if option == "Cover Page":
             if not all([roll, reg, paper_name, sub, paper_code]):
                 st.error("⚠️ Please fill all fields before submitting.")
             else:
-            # Save all inputs to session state
                 st.session_state["form_data"] = {
                     "univ": univ,
                     "stream": stream,
@@ -139,6 +140,27 @@ elif option == "Index":
 
     if st.button("Get PDF"):
         index.Index(st.session_state["stack"])
-        
+    
+elif option == "Invitation card":
+    st.header("Invitation Card Generator:")
+
+    with st.form("card form", clear_on_submit=True):
+        name = st.text_input("Enter the Name to be printed on the Invitation Card:")
+
+        submit_card =  st.form_submit_button("Submit", key="card_submit")
+
+        if submit_card:
+            if not name:
+                st.error("⚠️ Please fill the name field before submitting.")
+            else:
+                st.session_state["card_name"] = {
+                    "name": name
+                }
+                st.success("Your Form is submitted. Please generate your Invitation Card below.")
+
+    if "card_name" in st.session_state:
+        data = st.session_state["card_name"]
+        invitation_card.Invitation_card(data["name"])            
+       
 else:
     st.error("404! page not found")
