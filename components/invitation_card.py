@@ -1,41 +1,47 @@
 import streamlit as st
-from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
-from io import BytesIO
 from PyPDF2 import PdfReader, PdfWriter
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-import base64
+from io import BytesIO
 
 def Invitation_card(name):
     background_pdf_path = "assets/backgrounds/Farewellprogram.pdf"
+
+    # Load background page
+    bg_reader = PdfReader(background_pdf_path)
+    bg_page = bg_reader.pages[0]
+
+    width = float(bg_page.mediabox.width)
+    height = float(bg_page.mediabox.height)
+
     packet = BytesIO()
+    c = canvas.Canvas(packet, pagesize=(width, height))
 
-    c = canvas.Canvas(packet, pagesize=A4)
-    width, height = A4
-
-    c.setFont("Helvetica-Bold", 50)
+    c.setFont("Helvetica-Bold", 55)
     c.setFillColor(colors.white)
-    c.drawString(140, 320, f"{name}")
+
+    x = 180  
+    y = 320  
+
+    c.drawString(x, y, name)
 
     c.save()
     packet.seek(0)
 
-    background = PdfReader(background_pdf_path)
-    overlay = PdfReader(packet)
+    # Merge overlay with background
+    overlay_reader = PdfReader(packet)
+    overlay_page = overlay_reader.pages[0]
+    bg_page.merge_page(overlay_page)
 
     output = PdfWriter()
-    background_page = background.pages[0]
-    background_page.merge_page(overlay.pages[0])
-    output.add_page(background_page)
+    output.add_page(bg_page)
 
     final_buffer = BytesIO()
     output.write(final_buffer)
     final_buffer.seek(0)
 
     st.download_button(
-        label = "📄 Download PDF",
+        label="📄 Download Invitation Card",
         data=final_buffer,
         file_name=f"Invitation_Card_{name}.pdf",
         mime="application/pdf"
