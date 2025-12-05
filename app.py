@@ -137,32 +137,7 @@ elif option == "Index":
             st.badge("Success", color="green")
 
     if st.button("Get PDF"):
-        index.Index(st.session_state["stack"])
-    
-elif option == "Invitation card":
-    st.header("Invitation Card Generator:")
-
-    with st.form("card form", clear_on_submit=True):
-        name = st.text_input("Enter the Name to be printed on the Invitation Card:")
-        op = st.selectbox("Select the Occasion:", ("Farewell", "Freshers"), index=0)
-        submit_card =  st.form_submit_button("Submit", key="card_submit")
-
-        if submit_card:
-            if not name or not op:
-                st.error("⚠️ Please fill the name field before submitting.")
-            else:
-                st.session_state["card_name"] = {
-                    "name": name,
-                    "ocasion": op
-                }
-                st.success("Your Form is submitted. Please generate your Invitation Card below.")
-
-    if "card_name" in st.session_state:
-        data = st.session_state["card_name"]
-        if data["ocasion"] == "Farewell":
-            invitation_card.Invitation_card_Farewell(data["name"])
-        else:
-            invitation_card.Invitation_card_Freshers(data["name"])            
+        index.Index(st.session_state["stack"])          
        
 else:
     st.error("404! page not found")
