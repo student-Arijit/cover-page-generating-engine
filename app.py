@@ -29,7 +29,7 @@ if option == "Cover Page":
 
         st.subheader("Paper Details:")
         paper_name=st.text_input("Enter Your Paper name: ")
-        sub=st.text_input("Enter Your Subject: ")
+        sub=st.text_input("Enter Your Core Subject: ")
         paper_code=st.text_input("Enter Your Paper Code: ")
 
         col1, col2, col3 = st.columns([1, 0.5, 1])
@@ -71,6 +71,13 @@ if option == "Cover Page":
             st.image("assets/images/template4.png",caption="Template 4")
             if st.button("Generate PDF", key="template4"):
                 template4.cover_page(
+                    data["stream"], data["sem"], data["univ"], data["roll"],
+                    data["reg"], data["paper_name"], data["paper_code"], data["sub"]
+                )
+            
+            st.image("assets/images/template7.png",caption="Template 7")
+            if st.button("Generate PDF", key="template7"):
+                template7.cover_page(
                     data["stream"], data["sem"], data["univ"], data["roll"],
                     data["reg"], data["paper_name"], data["paper_code"], data["sub"]
                 )
