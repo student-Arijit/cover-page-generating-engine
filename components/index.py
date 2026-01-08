@@ -19,7 +19,7 @@ def Index(arr):
     elements.append(Spacer(1, 10))
 
     # Table data
-    data = [["SI No.", "Assignment Name", "Code Date", "Approval Date", "Pg. No.", "Signature"]]
+    data = [["SI No.", "Assignment Name",  "Pg. No.", "Signature"]] #"Code Date", "Approval Date",
     data.extend(arr)
     centered_style = ParagraphStyle(name="centered", parent=styles['Normal'], alignment=TA_CENTER)
     right_align = ParagraphStyle(

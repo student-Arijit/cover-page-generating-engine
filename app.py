@@ -133,19 +133,19 @@ elif option == "Index":
         with colii:
             page = st.text_input("Enter Page Number:")
 
-        coliii, coliv = st.columns(2)
+        #coliii, coliv = st.columns(2)
 
-        with coliii:
-            code_date = st.text_input("Enter Code Date:")
+        #with coliii:
+            #code_date = st.text_input("Enter Code Date:")
 
-        with coliv:
-            approve_date = st.text_input("Enter Approval Date:")
+       # with coliv:
+            #approve_date = st.text_input("Enter Approval Date:")
             
         submit_data = st.form_submit_button("Submit", key="index_submit")
 
         if submit_data:
             count = st.session_state["count"]
-            subdata = [str(count), assignment_name, code_date, approve_date, page, " "]
+            subdata = [str(count), assignment_name,  page, " "] #code_date, approve_date,
             st.session_state["stack"].append(subdata)
             st.session_state["count"] += 1
             st.badge("Success", color="green")
