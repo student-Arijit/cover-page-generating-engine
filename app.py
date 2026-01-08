@@ -98,6 +98,13 @@ if option == "Cover Page":
                     data["stream"], data["sem"], data["univ"], data["roll"],
                     data["reg"], data["paper_name"], data["paper_code"], data["sub"]
                 )
+            
+            st.image("assets/images/template6.png",caption="Template 6")
+            if st.button("Generate PDF", key="template6"):
+                template6.cover_page(
+                    data["stream"], data["sem"], data["univ"], data["roll"],
+                    data["reg"], data["paper_name"], data["paper_code"], data["sub"]
+                )
     else:
         st.info("📝 Please submit the form above to unlock the design section.")
 
