@@ -55,7 +55,32 @@ class Assignmentpage:
                                 label="📄 Download Project",
                                 data=open("./assets/asgn_pdfs/Computational_Math.pdf", "rb").read(),
                                 file_name = "DSCC-5.pdf",
-                                mime = "application/pdf")
+                                mime = "application/pdf",
+                                key="1")
+                        
+                        st.write("DSCC-7: Shell Script")
+                        col3, col4 = st.columns([0.5,2], gap="small")
+                        with col3:
+                            st.image("./assets/images/comp_math.png", width=100)
+                        with col4:
+                            st.download_button(
+                                label="📄 Download Project",
+                                data=open("./assets/asgn_pdfs/Computational_Math.pdf", "rb").read(),
+                                file_name = "DSCC-5.pdf",
+                                mime = "application/pdf",
+                                key="2")
+                        
+                        st.write("DSCC-5: JAVA Programming")
+                        col3, col4 = st.columns([0.5,2], gap="small")
+                        with col3:
+                            st.image("./assets/images/comp_math.png", width=100)
+                        with col4:
+                            st.download_button(
+                                label="📄 Download Project",
+                                data=open("./assets/asgn_pdfs/Computational_Math.pdf", "rb").read(),
+                                file_name = "DSCC-5.pdf",
+                                mime = "application/pdf",
+                                key="3")
                             
                     case "5th sem":
                         st.write("5th sem Computer Science Assignment")
