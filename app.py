@@ -153,7 +153,9 @@ elif option == "Index":
     if st.button("Get PDF"):
         index.Index(st.session_state["stack"])    
 
-#elif option == "Assignments":
+elif option == "Assignments":
+    a = Assignments.Assignmentpage()
+    a.run()
 
        
 else:

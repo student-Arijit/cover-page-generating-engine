@@ -1,6 +1,7 @@
 __all__ = [
                 "index",
-                "sidebar",  
+                "sidebar", 
+                "Assignments", 
                 "template1", 
                 "template2", 
                 "template3", 
