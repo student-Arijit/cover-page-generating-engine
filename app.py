@@ -151,7 +151,10 @@ elif option == "Index":
             st.badge("Success", color="green")
 
     if st.button("Get PDF"):
-        index.Index(st.session_state["stack"])          
+        index.Index(st.session_state["stack"])    
+
+#elif option == "Assignments":
+
        
 else:
     st.error("404! page not found")
