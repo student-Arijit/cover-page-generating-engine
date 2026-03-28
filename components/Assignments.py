@@ -21,19 +21,34 @@ class Assignmentpage:
                                 "Select Subject", 
                                 ["Computer Science", "Maths", "Electronics", "Physics"],
                                 key="sub")
+        st.sidebar.subheader("Syllabus")
+        st.sidebar.pills("", "1st Year", selection_mode="single", key="syllabus")
         st.sidebar.header("Quick Stat")
-        st.sidebar.write("Total Assignment: 3")
+        st.sidebar.write("Total Assignment: 8")
         st.sidebar.write("Covers:")
         col1, col2, col3 = st.sidebar.columns(3, gap="small")
         with col1:
-            st.badge("DSCC-5", color="yellow")
-        with col2:
+            st.badge("SEC-1", color="yellow")
+            st.badge("DSCC-3", color="yellow")
             st.badge("DSCC-7", color="yellow")
-        with col3:
+        with col2:
+            st.badge("DSCC-2", color="yellow")
+            st.badge("SEC-3", color="yellow")
             st.badge("DSCC-8", color="yellow")
+        with col3:
+            st.badge("SEC-2", color="yellow")
+            st.badge("DSCC-5", color="yellow")
+            
 
     def computer_science(self):
-        st.subheader("Computer Science Assignments:")
+        col1, col2 = st.columns([0.5, 4], gap="small")
+        with col1:
+            st.image("./assets/images/University_of_Calcutta_logo.png", width=100)
+
+        with col2:
+            st.space(size=2)
+            st.subheader("Computer Science Assignments:")
+
         col1, col2 = st.columns([1, 2])
         with col1:
             with st.container(border=True):
@@ -50,6 +65,24 @@ class Assignmentpage:
 
                     case "2nd sem":
                         st.write("2nd-sem Computer Science Assignment")
+                        st.write("DSCC-5: JAVA Programming")
+                        col3, col4 = st.columns([0.5,2], gap="small")
+                        with col3:
+                            st.image("./assets/images/comp_math.png", width=100)
+                        with col4:
+                            st.download_button(
+                                label="📄 Download Project",
+                                data=open("./assets/asgn_pdfs/c_assignment.pdf", "rb").read(),
+                                file_name = "DSCC-2_project.pdf",
+                                mime = "application/pdf",
+                                key="D20")
+                            
+                            st.download_button(
+                                label="📄 Download Index",
+                                data=open("./assets/asgn_pdfs/indexc.pdf", "rb").read(),
+                                file_name = "DSCC-2_index.pdf",
+                                mime = "application/pdf",
+                                key="D21")
 
                     case "3rd sem":
                         st.write("3rd-sem Computer Science Assignment")
@@ -107,7 +140,6 @@ class Assignmentpage:
                     
                     case _:
                         st.write("Select a semester to view assignments.")
-
 
     def run(self):
         self.render_sidebar()
