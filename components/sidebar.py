@@ -2,6 +2,6 @@ import streamlit as st
 
 def Sidebar():
     st.sidebar.subheader("Functionalities:")
-    option = st.sidebar.selectbox("What you want to generate:", ("Cover Page", "Index", "Assignments"))
+    option = st.sidebar.selectbox("What you want to generate:", ("Cover Page", "Index", "Assignments"),key="actions")
 
     return option
