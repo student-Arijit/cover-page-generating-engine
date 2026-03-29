@@ -1,6 +1,8 @@
 import streamlit as st
 from components import *
 
+
+
 st.set_page_config(
     "cover-page-generating-engine",
     page_icon = "📘"
