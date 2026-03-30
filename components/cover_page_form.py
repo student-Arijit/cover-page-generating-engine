@@ -37,16 +37,24 @@ class Form:
         c1, c2, c3 = st.columns(3)
         with c1:
             paper_name = st.text_input("Paper Name", placeholder="e.g. Java Programming", key="1")
+            val["paper_name"] = paper_name
         with c2:
             sub = st.text_input("Core Subject", placeholder="e.g. C.M.S.M", key="2")
+            val["sub"] = sub
         with c3:
             paper_code = st.text_input("Paper Name", placeholder="e.g. DSCC-8", key="3")
+            val["pape_code"] = paper_code
+        
+        return val
 
     def run(self):
-        student = self.student()
-        self.paper()
-        st.write(student)
-
+        with st.form("Cover Page Details", clear_on_submit=False):
+            student = self.student()
+            p = self.paper()
+            st.divider()
+            c1, c2, c3 = st.columns(3)
+            with c3:
+                st.form_submit_button("Submit", use_container_width=True)
 
 f = Form()
 f.run()
