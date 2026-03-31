@@ -1,0 +1,15 @@
+div[data-baseweb="select"] > div {
+    border: 1px solid black !important;
+    border-radius: 8px !important;
+}
+
+div[data-baseweb="input"] > div {
+    border: 1px solid black !important;
+    border-radius: 8px !important;
+} 
+
+hr {
+    margin: -0.5rem -1rem;
+    border: none;
+    border-top: 1px solid rgba(128,128,128,0.25);
+}

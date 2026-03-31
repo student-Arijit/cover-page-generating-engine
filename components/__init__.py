@@ -1,7 +1,10 @@
 __all__ = [
                 "index",
                 "sidebar", 
-                "Assignments", 
+                "Assignments",
+                "cover_page_form",
+                "handler",
+                "template",
                 "template1", 
                 "template2", 
                 "template3", 

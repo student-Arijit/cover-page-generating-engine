@@ -1,20 +1,16 @@
 import streamlit as st
 
-def Sidebar():
-    col1, col2, col3 = st.sidebar.columns([1,2,1])
-    with col2:
-        st.image("./assets/images/sidebar.png", width=70)
+class Sidebar:
+    def __init__(self):
+        col1, col2, col3 = st.sidebar.columns([1,2,1])
+        with col2:
+            st.image("./assets/images/sidebar.png", width=70)
 
-    st.markdown("""
-<style>
-/* Target the selectbox */
-div[data-baseweb="select"] > div {
-    border: 1px solid black !important;
-    border-radius: 8px !important;
-}
-</style>
-""", unsafe_allow_html=True)
-    st.sidebar.subheader("Functionalities:")
-    option = st.sidebar.selectbox("What you want to generate:", ("Cover Page", "Index", "Assignments"),key="actions")
+    def page(self):
+        st.sidebar.subheader("Functionalities:")
+        option = st.sidebar.selectbox("What you want to generate:", ("Cover Page", "Index", "Assignments"),key="actions")
 
-    return option
+        return option
+    
+    def cover_page_sidebar(self):
+        vis = st.sidebar.toggle("University Logo Visible", value=True, help="You want the University logo or not you can select")

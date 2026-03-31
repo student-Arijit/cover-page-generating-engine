@@ -2,7 +2,7 @@ import streamlit as st
 
 class Form:
     def __init__(self):
-        st.set_page_config("Cover page Generator")
+        st.set_page_config("Cover Page Generator", page_icon="📘")
     
     def student(self):
         st.caption("STUDENT INFO")
@@ -28,8 +28,7 @@ class Form:
             val["reg"] = reg
         
         return val
-        
-        
+          
     def paper(self):
         st.caption("PAPER DETAILS")
         val = {}
@@ -42,19 +41,36 @@ class Form:
             sub = st.text_input("Core Subject", placeholder="e.g. C.M.S.M", key="2")
             val["sub"] = sub
         with c3:
-            paper_code = st.text_input("Paper Name", placeholder="e.g. DSCC-8", key="3")
-            val["pape_code"] = paper_code
+            paper_code = st.text_input("Paper Code", placeholder="e.g. DSCC-8", key="3")
+            val["paper_code"] = paper_code
         
         return val
-
+    
+    def _divider(self):
+        st.markdown(
+            """
+            <hr style="
+                margin: -0.5rem -1rem;
+                border: none;
+                border-top: 1px solid rgba(128,128,128,0.25);
+            "/>
+            """,
+            unsafe_allow_html=True)
+    
     def run(self):
         with st.form("Cover Page Details", clear_on_submit=False):
+            st.markdown("""<h5>Cover Page Details</h5>""", unsafe_allow_html=True)
+            self._divider()
             student = self.student()
-            p = self.paper()
-            st.divider()
+            paper = self.paper()
+            self._divider()
+            submit=None
             c1, c2, c3 = st.columns(3)
             with c3:
-                st.form_submit_button("Submit", use_container_width=True)
-
-f = Form()
-f.run()
+                submit = st.form_submit_button("Submit", use_container_width=True)
+            if submit:
+                if not all([student["univ"], student["stream"], student["sem"], student["roll"], student["reg"], paper["paper_name"], paper["sub"], paper["paper_code"]]):
+                    st.error("Please fill all fields before submitting.")
+                else:
+                    st.session_state["cover_page_details"] = student | paper
+                    st.success("Form submitted. Choose your design below.")
