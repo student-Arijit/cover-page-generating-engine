@@ -5,9 +5,14 @@ st.error("app on maintanance")
 
 handler.load_css("assets/style.css")
 o = sidebar.Sidebar()
-option = o.page()
+o.main()
+o.contact()
+o.manage()
+o.account()
 
-if option == "Cover Page":
+
+
+"""if option == "Cover Page":
     o.cover_page_sidebar()
     st.title("Cover Page Generating Engine:")
     st.subheader("Information Form:")
@@ -78,4 +83,4 @@ elif option == "Assignments":
 
        
 else:
-    st.error("404! page not found")
+    st.error("404! page not found")"""
