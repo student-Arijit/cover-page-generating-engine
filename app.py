@@ -4,12 +4,16 @@ from components import *
 st.error("app on maintanance")
 
 handler.load_css("assets/style.css")
-o = sidebar.Sidebar()
-o.main()
-o.contact()
-o.manage()
-o.account()
+s = sidebar.Sidebar()
+page = s.main()
+st.write(page)
+s.contact()
+s.manage()
+s.account()
 
+if page == "assignments":
+    a = Assignments.Assignmentpage()
+    a.run()
 
 
 """if option == "Cover Page":
