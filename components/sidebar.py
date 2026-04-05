@@ -107,8 +107,6 @@ class Sidebar:
     redirect_uri=REDIRECT_URI,
     scope="openid email profile",
     key="google_oauth",
-    use_pkce=True,
-    pkce="S256"
 )
 
         if result and "token" in result:
