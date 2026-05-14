@@ -1,7 +1,9 @@
 from components import icons
 import streamlit as st
 from streamlit_oauth import OAuth2Component
+from streamlit_cookies_manager import EncryptedCookieManager
 import requests
+import secrets
 import base64
 import json
 
@@ -47,6 +49,7 @@ class Sidebar:
     def account(self):
         CLIENT_ID = st.secrets["CLIENT_ID"]
         CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
+        COOKIE_SECRET = st.secrets["COOKIE_SECRET"]
         REDIRECT_URI  = "https://cover-page-generating-engine-wkwnu5xgwg9rgus8eyd2da.streamlit.app/"
         AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
         TOKEN_URL     = "https://oauth2.googleapis.com/token"
@@ -56,6 +59,24 @@ class Sidebar:
             st.session_state.token = None
         if "user" not in st.session_state:
             st.session_state.user = None
+
+        cookies = EncryptedCookieManager(
+            prefix="myapp_",
+            password=COOKIE_SECRET
+        )
+
+        if not cookies.ready():
+            st.stop()
+
+        if st.session_state.user is None:
+
+            saved_user = cookies.get("user")
+
+            if saved_user:
+                try:
+                    st.session_state.user = json.loads(saved_user)
+                except:
+                    pass
 
         oauth = OAuth2Component(
             CLIENT_ID, CLIENT_SECRET,
@@ -83,7 +104,7 @@ class Sidebar:
                     </div>
                 </div>
             """, unsafe_allow_html=True)
-
+# LOGIN
             result = oauth.authorize_button(
                 "Login with Google",
                 redirect_uri=REDIRECT_URI,
@@ -91,23 +112,34 @@ class Sidebar:
             )
 
             if result and "token" in result:
+
                 token = result["token"]
-                st.session_state.token = token
 
-                # ✅ SAFE decode
-                try:
-                    id_token = token.get("id_token")
+                id_token = token.get("id_token")
 
-                    if id_token:
+                if id_token:
+
+                    try:
+
                         payload = id_token.split(".")[1]
-                        payload += "=" * (4 - len(payload) % 4)
-                        user = json.loads(base64.urlsafe_b64decode(payload))
+                        payload += "=" * (-len(payload) % 4)
+
+                        user = json.loads(
+                            base64.urlsafe_b64decode(payload)
+                        )
+
+                        # SAVE SESSION
                         st.session_state.user = user
 
-                except Exception as e:
-                    st.error("Login failed")
+                        # SAVE COOKIE
+                        cookies["user"] = json.dumps(user)
+                        cookies.save()
 
-                st.rerun()
+                        st.rerun()
+
+                    except Exception as e:
+                        st.error("Login failed")
+
 
         else:
             user = st.session_state.user
@@ -126,7 +158,13 @@ class Sidebar:
             else:
                 st.warning("User info not available")
                 
-            if st.button("Logout"):
-                st.session_state.token = None
+            if st.sidebar.button("Logout"):
+
+                # CLEAR SESSION
                 st.session_state.user = None
-                st.rerun()   
+
+                # CLEAR COOKIE
+                cookies["user"] = ""
+                cookies.save()
+
+                st.rerun()  

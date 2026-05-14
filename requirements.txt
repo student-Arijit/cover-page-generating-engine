@@ -2,3 +2,4 @@ streamlit
 reportlab
 PyPDF2
 streamlit_oauth
+streamlit-cookies-manager

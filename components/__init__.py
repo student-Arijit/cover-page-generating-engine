@@ -5,4 +5,5 @@ __all__ = [
                 "cover_page_form",
                 "handler",
                 "template",
+                "generate"
             ]
