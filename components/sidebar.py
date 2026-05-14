@@ -60,22 +60,18 @@ class Sidebar:
         if "user" not in st.session_state:
             st.session_state.user = None
 
-        cookies = EncryptedCookieManager(
-            prefix="myapp_",
-            password=COOKIE_SECRET
-        )
-
+        cookies = EncryptedCookieManager(prefix="myapp_", password=COOKIE_SECRET)
         if not cookies.ready():
             st.stop()
 
+        # Restore user AND token from cookie on first load
         if st.session_state.user is None:
-
             saved_user = cookies.get("user")
-
             if saved_user:
                 try:
                     st.session_state.user = json.loads(saved_user)
-                except:
+                    st.session_state.token = "restored"  # ← KEY FIX: marks as logged in
+                except Exception:
                     pass
 
         oauth = OAuth2Component(
@@ -85,6 +81,7 @@ class Sidebar:
         )
 
         if st.session_state.token is None:
+            # ── Guest profile ──────────────────────────────────────────────
             st.sidebar.markdown("""
                 <div class="sidebar-profile">
                     <div class="profile-avatar">
@@ -104,67 +101,53 @@ class Sidebar:
                     </div>
                 </div>
             """, unsafe_allow_html=True)
-# LOGIN
-            result = oauth.authorize_button(
+
+            # ── Login button ───────────────────────────────────────────────
+            result = oauth.authorize_button(  # ← FIX: correct indentation
                 "Login with Google",
                 redirect_uri=REDIRECT_URI,
                 scope="openid email profile"
             )
 
             if result and "token" in result:
-
                 token = result["token"]
-
                 id_token = token.get("id_token")
-
                 if id_token:
-
                     try:
-
                         payload = id_token.split(".")[1]
                         payload += "=" * (-len(payload) % 4)
+                        user = json.loads(base64.urlsafe_b64decode(payload))
 
-                        user = json.loads(
-                            base64.urlsafe_b64decode(payload)
-                        )
-
-                        # SAVE SESSION
+                        st.session_state.token = token   # ← FIX: store actual token
                         st.session_state.user = user
 
-                        # SAVE COOKIE
                         cookies["user"] = json.dumps(user)
                         cookies.save()
-
                         st.rerun()
-
                     except Exception as e:
-                        st.error("Login failed")
-
+                        st.error(f"Login failed: {e}")
 
         else:
+            # ── Logged-in profile ──────────────────────────────────────────
             user = st.session_state.user
             if user:
                 st.sidebar.markdown(f"""
                 <div class="sidebar-profile">
                     <div class="profile-avatar">
-                        <img src="{user.get("picture", "")}" width="60" style="border-radius:50%;">
+                        <img src="{user.get('picture', '')}" width="60" style="border-radius:50%;">
                     </div>
                     <div class="profile-info">
-                        <span class="profile-name">{user.get("name", "N/A")}</span>
-                        <span class="profile-role">{user.get("email", "N/A")}</span>
+                        <span class="profile-name">{user.get('name', 'N/A')}</span>
+                        <span class="profile-role">{user.get('email', 'N/A')}</span>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
             else:
                 st.warning("User info not available")
-                
+
             if st.sidebar.button("Logout"):
-
-                # CLEAR SESSION
+                st.session_state.token = None   # ← FIX: also clear token
                 st.session_state.user = None
-
-                # CLEAR COOKIE
                 cookies["user"] = ""
                 cookies.save()
-
-                st.rerun()  
+                st.rerun()
