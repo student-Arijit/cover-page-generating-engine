@@ -1,5 +1,5 @@
-streamlit
 reportlab
 PyPDF2
-streamlit_oauth
+streamlit
+streamlit-oauth
 streamlit-cookies-manager
