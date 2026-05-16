@@ -2,8 +2,6 @@ from components import icons
 import streamlit as st
 from streamlit_oauth import OAuth2Component
 from streamlit_cookies_manager import EncryptedCookieManager
-import requests
-import secrets
 import base64
 import json
 
@@ -47,9 +45,12 @@ class Sidebar:
                             """, unsafe_allow_html=True)
 
     def account(self):
-        CLIENT_ID = st.secrets["CLIENT_ID"]
-        CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
-        COOKIE_SECRET = st.secrets["COOKIE_SECRET"]
+        #CLIENT_ID = st.secrets["CLIENT_ID"]
+        #CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
+        #COOKIE_SECRET = st.secrets["COOKIE_SECRET"]
+        CLIENT_ID = "sdgtdrgt"
+        CLIENT_SECRET = "fdhgxy"
+        COOKIE_SECRET = "drfgytdr"
         REDIRECT_URI  = "https://cover-page-generating-engine-wkwnu5xgwg9rgus8eyd2da.streamlit.app/"
         AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
         TOKEN_URL     = "https://oauth2.googleapis.com/token"
@@ -64,7 +65,6 @@ class Sidebar:
         if not cookies.ready():
             st.stop()
 
-        # Restore user AND token from cookie on first load
         if st.session_state.user is None:
             saved_user = cookies.get("user")
             if saved_user:
@@ -81,7 +81,6 @@ class Sidebar:
         )
 
         if st.session_state.token is None:
-            # ── Guest profile ──────────────────────────────────────────────
             st.sidebar.markdown("""
                 <div class="sidebar-profile">
                     <div class="profile-avatar">
@@ -102,8 +101,7 @@ class Sidebar:
                 </div>
             """, unsafe_allow_html=True)
 
-            # ── Login button ───────────────────────────────────────────────
-            result = oauth.authorize_button(  # ← FIX: correct indentation
+            result = oauth.authorize_button(  
                 "Login with Google",
                 redirect_uri=REDIRECT_URI,
                 scope="openid email profile"
@@ -118,7 +116,7 @@ class Sidebar:
                         payload += "=" * (-len(payload) % 4)
                         user = json.loads(base64.urlsafe_b64decode(payload))
 
-                        st.session_state.token = token   # ← FIX: store actual token
+                        st.session_state.token = token  
                         st.session_state.user = user
 
                         cookies["user"] = json.dumps(user)
@@ -128,7 +126,6 @@ class Sidebar:
                         st.error(f"Login failed: {e}")
 
         else:
-            # ── Logged-in profile ──────────────────────────────────────────
             user = st.session_state.user
             if user:
                 st.sidebar.markdown(f"""
@@ -146,7 +143,7 @@ class Sidebar:
                 st.warning("User info not available")
 
             if st.sidebar.button("Logout"):
-                st.session_state.token = None   # ← FIX: also clear token
+                st.session_state.token = None  
                 st.session_state.user = None
                 cookies["user"] = ""
                 cookies.save()

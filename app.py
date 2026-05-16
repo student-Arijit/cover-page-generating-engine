@@ -1,9 +1,8 @@
 import streamlit as st
 from components import *
 
-#st.error("app on maintanance")
-
-handler.load_css("assets/style.css")
+h = handler.Handler()
+h.load_css("assets/style.css")
 
 s = sidebar.Sidebar()
 page = s.main()
@@ -13,4 +12,4 @@ s.account()
 
 if page == "generate":
     page = generate.GeneratePage()
-    page.render()
+    page.run()
