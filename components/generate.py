@@ -2,7 +2,7 @@ import streamlit as st
 from components.handler import Handler
 from dataclasses import dataclass
 import google.generativeai as genai
-from weasyprint import HTML
+from xhtml2pdf import pisa
 import os
 
 @dataclass
@@ -32,7 +32,8 @@ class GeneratePage(Handler):
         html = response.text
         with open("cover.html", "w", encoding="utf-8") as file:
             file.write(html)
-        HTML(string=html).write_pdf("cover.pdf")    
+        with open("cover.pdf", "wb") as pdf:
+            pisa.CreatePDF(html, dest=pdf)  
         os.remove("cover.html")
 
     def _left_section(self):
