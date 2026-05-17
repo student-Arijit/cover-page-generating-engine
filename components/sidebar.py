@@ -45,12 +45,9 @@ class Sidebar:
                             """, unsafe_allow_html=True)
 
     def account(self):
-        #CLIENT_ID = st.secrets["CLIENT_ID"]
-        #CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
-        #COOKIE_SECRET = st.secrets["COOKIE_SECRET"]
-        CLIENT_ID = "sdgtdrgt"
-        CLIENT_SECRET = "fdhgxy"
-        COOKIE_SECRET = "drfgytdr"
+        CLIENT_ID = st.secrets["CLIENT_ID"]
+        CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
+        COOKIE_SECRET = st.secrets["COOKIE_SECRET"]
         REDIRECT_URI  = "https://cover-page-generating-engine-wkwnu5xgwg9rgus8eyd2da.streamlit.app/"
         AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
         TOKEN_URL     = "https://oauth2.googleapis.com/token"
