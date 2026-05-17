@@ -4,4 +4,4 @@ streamlit
 streamlit-oauth
 streamlit-cookies-manager
 google-generativeai
-xhtml2pdf
+weasyprint
