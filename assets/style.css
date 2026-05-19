@@ -195,7 +195,7 @@ div[data-baseweb="input"] > div {
 .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
 .mono { font-family: var(--mono); font-size: 12px; color: var(--text-lo); }
 
-.card {
+.st-key-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -203,7 +203,43 @@ div[data-baseweb="input"] > div {
     margin-bottom: 14px;
 }
 
-.card:hover { 
+.st-key-card:hover { 
+    border-color: var(--border-hi); 
+}
+
+.st-key-preview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+}
+
+.st-key-preview-card:hover { 
+    border-color: var(--border-hi); 
+}
+
+.st-key-index-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+}
+
+.st-key-index-card:hover { 
+    border-color: var(--border-hi); 
+}
+
+.st-key-quick-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+}
+
+.st-key-quick-card:hover { 
     border-color: var(--border-hi); 
 }
 
@@ -223,10 +259,10 @@ div[data-baseweb="input"] > div {
     }
 }
 
-/*================================================*/
-/* =========================
-   ASSIGNMENT PAGE
-========================= */
+
+
+/*================================================
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 html, body, [class*="css"]{
@@ -465,45 +501,4 @@ html, body, [class*="css"]{
 
     margin-top: 8px;
 }
-
-.stButton > button:hover{
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 20px rgba(79,70,229,0.28);
-
-    background: linear-gradient(
-        135deg,
-        #4338ca,
-        #6d28d9
-    ) !important;
-}
-
-section[data-testid="stSidebar"]{
-
-    background: linear-gradient(
-        180deg,
-        #111827,
-        #1f2937
-    );
-
-    border-right: 1px solid rgba(255,255,255,0.05);
-}
-
-section[data-testid="stSidebar"] *{
-    color: white !important;
-}
-
-::-webkit-scrollbar{
-    width: 8px;
-}
-
-::-webkit-scrollbar-track{
-    background: #f3f4f6;
-}
-
-::-webkit-scrollbar-thumb{
-    background: #7c3aed;
-    border-radius: 20px;
-}
+*/
