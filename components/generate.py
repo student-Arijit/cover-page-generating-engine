@@ -10,6 +10,7 @@ import base64
 @dataclass
 class GeneratePage(Handler):
     def __init__(self):
+        super().__init__()
         self.load_css("assets/style.css")
 
     def _render_header(self) -> None:
@@ -26,6 +27,7 @@ class GeneratePage(Handler):
             </div>
                     """,unsafe_allow_html=True)
     
+    @st.cache_data
     def _pdf_by_model(self, prompt):
         GEN_AI_API = st.secrets["GEN_AI_API"]
         genai.configure(api_key=GEN_AI_API)
@@ -34,7 +36,7 @@ class GeneratePage(Handler):
         html = response.text
         with open("cover.html", "w", encoding="utf-8") as file:
             file.write(html)
-        HTML(string=html).write_pdf("cover.pdf")    
+        HTML(string=html).write_pdf("cover.pdf")
         os.remove("cover.html")
     
     def _pdf_display(self, pdf):
@@ -79,6 +81,7 @@ class GeneratePage(Handler):
                 else:
                     with st.spinner("Building PDF..."):
                         try:
+                            self.history_db()
                             self._pdf_by_model(prompt)
                             st.success("PDF Generated Successfully!")
                         except Exception as e:

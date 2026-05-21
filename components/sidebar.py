@@ -1,18 +1,24 @@
 from components import icons
+from components.handler import Handler
+from supabase import create_client
 import streamlit as st
 from streamlit_oauth import OAuth2Component
 from streamlit_cookies_manager import EncryptedCookieManager
+from supabase import create_client
 import base64
 import json
 
-class Sidebar:
+class Sidebar(Handler):
     def __init__(self):
+        super().__init__()
+        self.load_css("assets/style.css")
         st.sidebar.image("./assets/images/sidebar.png", width=50)
         st.sidebar.markdown("""
                 <h3 class="sidebar-header">Student Utility Website</h3>
                 <a href="https://www.caluniv.ac.in/"><p class="univ-sidebar">University of Calcutta</p></a>
                 <hr class="line">
             """, unsafe_allow_html=True)
+        self.user_db()
 
     def main(self):
         st.sidebar.space(size=5)
@@ -50,6 +56,7 @@ class Sidebar:
         COOKIE_SECRET = st.secrets["COOKIE_SECRET"]
 
         REDIRECT_URI  = "https://cover-page-generating-engine-wkwnu5xgwg9rgus8eyd2da.streamlit.app/"
+        #REDIRECT_URI = "https://automatic-system-q7q6wv7r4wxwc9xw-8501.app.github.dev/"
         AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
         TOKEN_URL     = "https://oauth2.googleapis.com/token"
         REVOKE_URL    = "https://oauth2.googleapis.com/revoke"
@@ -68,7 +75,7 @@ class Sidebar:
             if saved_user:
                 try:
                     st.session_state.user = json.loads(saved_user)
-                    st.session_state.token = "restored"  # ← KEY FIX: marks as logged in
+                    st.session_state.token = "restored"  
                 except Exception:
                     pass
 
@@ -125,6 +132,7 @@ class Sidebar:
 
         else:
             user = st.session_state.user
+
             if user:
                 st.sidebar.markdown(f"""
                 <div class="sidebar-profile">

@@ -2,7 +2,6 @@ import streamlit as st
 from components import *
 
 h = handler.Handler()
-h.load_css("assets/style.css")
 
 s = sidebar.Sidebar()
 page = s.main()
@@ -11,5 +10,8 @@ s.manage()
 s.account()
 
 if page == "generate":
-    page = generate.GeneratePage()
-    page.run()
+    p = generate.GeneratePage()
+    p.run()
+elif page == "assignments":
+    p = Assignments.AssignmentGeneratePage()
+    p.run()

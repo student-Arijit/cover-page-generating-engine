@@ -5,3 +5,4 @@ streamlit-oauth
 streamlit-cookies-manager
 google-generativeai
 weasyprint
+supabase
