@@ -56,7 +56,7 @@ class Sidebar(Handler):
         COOKIE_SECRET = st.secrets["COOKIE_SECRET"]
 
         REDIRECT_URI  = "https://cover-page-generating-engine-wkwnu5xgwg9rgus8eyd2da.streamlit.app/"
-        #REDIRECT_URI = "https://automatic-system-q7q6wv7r4wxwc9xw-8501.app.github.dev/"
+        #REDIRECT_URI = "https://ominous-fishstick-4j76xqj46j6gh7gjv-8501.app.github.dev/"
         AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
         TOKEN_URL     = "https://oauth2.googleapis.com/token"
         REVOKE_URL    = "https://oauth2.googleapis.com/revoke"
